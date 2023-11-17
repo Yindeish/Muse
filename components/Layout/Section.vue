@@ -45,11 +45,11 @@ export default {
 }
 </script>
 <style lang="" scoped>
-    .play-btn-container {
+    /* .play-btn-container {
         display: none;
     }
 
     .item-container:hover .play-btn-container {
         display: block;
-    }
+    } */
 </style>
