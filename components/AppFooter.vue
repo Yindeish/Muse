@@ -20,17 +20,41 @@
             </div>
 
             <!-- Volume Controls -->
-            <div>
-                volume
+            <div v-if="musicStatus == states.playing" class="w-[45px] h-[45px] bg-transparent">
+                <IconPlayIndicator cls="w-full h-full" color="white" />
             </div>
         </div>
 
 
     </div>
 </template>
-<script>
-export default {
-    
+<script setup>
+
+const currentMusic = ref({});
+
+const states = ref({
+    notPlaying: 'not-playing',
+    playing: 'playing',
+    paused: 'paused',
+    stopped: 'stopped'
+})
+
+const musicStatus = ref('playing');
+
+const play = () => {
+    musicStatus.value = states.value.playing;
+}
+
+const pause = () => {
+    musicStatus.value = states.value.paused;
+}
+
+const stop = () => {
+    musicStatus.value = states.value.stopped;
+}
+
+const reset = () => {
+    musicStatus.value = states.value.notPlaying;
 }
 </script>
 <style lang="">

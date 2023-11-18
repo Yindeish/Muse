@@ -1,6 +1,19 @@
 <template lang="">
     <div class="flex justify-between items-center px-3 py-2">
+
+        <div class="flex gap-2 items-center">
+        <div @clcik="backward" class="rounded-full  w-[25px] h-[25px] max-sm:w-[23px] max-sm:h-[23px] bg-gray-800 hover:bg-gray-800 cursor-pointer flex items-center justify-center active:scale-95">
+                <IconChevronLeft cls="text-white  w-[20px] h-[20px] max-sm:w-[18px] max-sm:h-[18px]" />
+            </div>
+        <div @clcik="forward" class="rounded-full  w-[25px] h-[25px] max-sm:w-[23px] max-sm:h-[23px] bg-gray-800 hover:bg-gray-800 cursor-pointer flex items-center justify-center active:scale-95">
+                <IconChevronRight cls="text-white  w-[20px] h-[20px] max-sm:w-[18px] max-sm:h-[18px]" />
+            </div>
+
+            <span class="text-white font-base text-lg">{{`${ currentSegment !== '' ? currentSegment[0].toUpperCase() : ''}${currentSegment !== '' ? currentSegment.slice(1) : ''}`}}</span>
+        </div>
+
         <nuxt-link class="text-white font-bold max-sm:text-sm text-3xl" to="/">Muse</nuxt-link>
+
 
         <div class="flex items-center gap-3">
             <div class="w-[25px] h-[25px] bg-gray-800 rounded-full flex items-center justify-center">
@@ -15,14 +28,25 @@
         </div>
     </div>
 </template>
-<script>
-export default {
-    props: {
-        onPress: {
-            type: Function
-        }
-    }
+<script setup>
+
+const props = defineProps(['onPress']);
+const router = useRouter();
+
+const currentSegment = ref('');
+
+const forward = () => {
+    router.go(1)
 }
+const backward = () => {
+    router.go(-1)
+}
+
+onMounted(() => {
+    const segment = useRequestURL().pathname;
+    currentSegment.value = segment.slice(1);
+})
+
 </script>
 <style lang="">
     
