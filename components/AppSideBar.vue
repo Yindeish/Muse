@@ -26,12 +26,12 @@
 
             <span class="text-white text-md font-normal rounded-full bg-gray-900 p-2 px-4 w-[fit-content] cursor-pointer max-sm:text-sm">Podcasts & Shows</span>
 
-            <div class="flex items-center justify-between">
-                <div class="flex justify-start items-center gap-4 cursor-pointer">
+            <div class="flex max-sm:flex-col items-center max-sm:items-start justify-between max-sm:gap-2">
+                <div class="flex justify-start items-center gap-4 cursor-pointer max-sm:order-2">
                 <IconSearch cls="text-gray-400 w-[25px] h-[25px] max-sm:w-[20px] max-sm:h-[20px]" />
                 <input type="search" class="text-lg max-sm:text-base font-bold text-gray-400 bg-transparent border-2 focus:outline-none focus:border-gray-400 border-gray-700 p-2 max-sm:p-1 rounded-md w-full">
                 </div>
-                <div class="flex justify-start items-center gap-4 cursor-pointer">
+                <div class="flex justify-start items-center gap-4 cursor-pointer max-sm:order-1">
                     <span class="text-lg font-bold text-white max-sm:text-base">Recents</span>
                     <IconRecent cls="text-gray-400 w-[25px] h-[25px] max-sm:w-[20px] max-sm:h-[20px]" />
                 </div>
