@@ -7,7 +7,7 @@
                     <img class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/ogw/AKPQZvw9hOaAosIwjnnU8bCyV5ru6yxGxZvADynOjmls1Q=s32-c-mo" alt="">
                 </div>
                 <div class="flex flex-col gap-3">
-                    <span class="text-white max-sm:text-sm">Mystty Talks</span>
+                    <span class="text-white max-sm:text-sm">{{selectedSong?.track?.name}}</span>
                     <span class="text-gray-400 text-sm max-sm:hidden">Podcast . Misturah Akanbi</span>
                 </div>
                 <div>
@@ -30,7 +30,17 @@
 </template>
 <script setup>
 
-const currentMusic = ref({});
+const selectedSong = ref(null);
+
+onMounted(() => {
+    console.log(selectedSong)
+    selectedSong.value = localStorage.getItem('selectedSong')
+})
+
+onUpdated(() => {
+    console.log(selectedSong)
+    selectedSong.value = localStorage.getItem('selectedSong')
+})
 
 const states = ref({
     notPlaying: 'not-playing',
