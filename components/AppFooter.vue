@@ -48,14 +48,16 @@ const toggleVideo = () => {
     isPlaying.value = !isPlaying.value;
 };
 
-const intervalId = setInterval(() => {
-    
-    if (currentSong.value !== JSON.parse(localStorage.getItem('currentSong'))) {
-        currentSong.value = JSON.parse(localStorage.getItem('currentSong'));
+onMounted(() => {
+    const intervalId = setInterval(() => {
 
-        // clearInterval(intervalId);
-    }
-}, 1000);
+        if (currentSong.value !== JSON.parse(localStorage.getItem('currentSong'))) {
+            currentSong.value = JSON.parse(localStorage.getItem('currentSong'));
+
+            // clearInterval(intervalId);
+        }
+    }, 1000);
+})
 
 </script>
 <style lang="">
