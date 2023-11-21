@@ -4,7 +4,7 @@
             <!-- Podcast/Song playing -->
             <div class="w-[fit-content] flex max-sm:flex-col gap-3 justify-start items-center max-sm:items-start max-sm:justify-center max-sm:p-0 rounded-md p-2">
                 <div class="w-[50px] h-[50px] max-sm:w-[35px] max-sm:h-[35px] rounded-md overflow-hidden cursor-pointer">
-                    <img class="w-full h-full object-contain" :src="playListImg" alt="">
+                    <img class="w-full h-full object-contain" :src="currentSong?.playListImg" alt="">
                 </div>
                 <div class="flex flex-col gap-3">
                     <span class="text-white max-sm:text-sm">{{currentSong?.track?.name}}</span>
