@@ -2,11 +2,11 @@
     <div class="w-full flex flex-col items-center gap-5 bg-gray-800 h-full p-4 max-sm:p-2 overflow-y-scroll">
         <!-- Playlist Poster -->
         <div class="w-full h-[20vh]">
-            <img class="w-full h-full object-cover" src="" alt="">
+            <img class="w-full h-full object-cover" :src="playListImg" alt="">
         </div>
 
         <!-- Playlist controls -->
-        <div class="w-full flex justify-between items-center">
+        <!-- <div class="w-full flex justify-between items-center">
             <div class="flex gap-6 max-sm:gap-3 items-center">
                 <div class="text-green-600 w-[40px] h-[40px] max-sm:w-[30px] max-sm:h-[30px] rounded-full">
                     <IconPlay cls="w-full h-full" />
@@ -23,7 +23,7 @@
             <div>
 
             </div>
-        </div>
+        </div> -->
         <!-- Playlist controls -->
 
         <!-- List -->
@@ -45,17 +45,19 @@
 
             <!-- List Body -->
            
-            <div @click="selectSong(playList?.[0])" class="w-full py-2 flex justify-between items-center px-4 max-sm:px-1 cursor-pointer hover:bg-gray-950 rounded-md">
+            <div v-if="playList?.[0]?.track?.playcount/1000000 !== 'NaN'" @click="selectSong()" class="w-full py-2 flex justify-between items-center px-4 max-sm:px-1 cursor-pointer hover:bg-gray-950 rounded-md">
                <div class="flex gap-2 text-gray-400">
                     <span class="max-sm:text-sm">1</span>
 
                     <div class="w-full flex max-sm:flex-col gap-3 max-sm:gap-1 justify-start items-center max-sm:items-start rounded-md  max-sm:p-1 cursor-pointer">
                     <div class="w-[50px] h-[50px] max-sm:w-[35px] max-sm:h-[35px] rounded-md overflow-hidden">
-                        <img class="w-full h-full object-contain" src="">
+                        <img class="w-full h-full object-contain" :src="playListImg">
                     </div>
                     <div class="flex flex-col gap-3 max-sm:gap-1.5">
                         <span class="text-white max-sm:text-sm">{{playList?.[0]?.track?.name}}</span>
-                        <span class="text-gray-400 text-sm">{{playList?.[0]?.track?.artists?.items?.[0]?.profile.name}}</span>
+                        <div class="flex items-center gap-1">
+                            <span v-for="artist in playList?.[0]?.track?.artists?.items" class="text-gray-400 text-sm">{{artist?.profile.name}}</span>
+                        </div>
                     </div>
                 </div>
                </div>
@@ -74,12 +76,21 @@
     </div>
 </template>
 <script setup>
+const playListImg = ref('');
+let trackId, preview_url;
 const { id } = useRoute().params;
+trackId = id[0];
+
+const fullPath = useRoute().fullPath;
+const urlRegex = /https?:\/\/\S+/;
+
+preview_url = fullPath.match(urlRegex)[0];
+
 const playList = ref(null);
 const state = ref('pending');
 
-const selectSong = (song) => {
-    localStorage.setItem('selectedSong', JSON.stringify(song))
+const selectSong = () => {
+    localStorage.setItem('currentSong', JSON.stringify({...playList.value?.[0], preview_url, playListImg}))
 }
 
 const fromatMilliSec = (milliseconds) => {
@@ -91,7 +102,7 @@ const fromatMilliSec = (milliseconds) => {
 }
 
 const getPlayList = async () => {
-    const url = `https://spotify23.p.rapidapi.com/album_tracks/?id=${id}&offset=0&limit=300`;
+    const url = `https://spotify23.p.rapidapi.com/album_tracks/?id=${trackId}&offset=0&limit=300`;
     const options = {
         method: 'GET',
         headers: {
@@ -105,7 +116,6 @@ const getPlayList = async () => {
         const response = await fetch(url, options);
         const result = await response.json();
         playList.value = result?.data?.album?.tracks?.items;
-        console.log(playList.value);
     } catch (error) {
         console.error(error);
     } finally {
@@ -113,10 +123,35 @@ const getPlayList = async () => {
     }
 }
 
-onMounted(() => {
-    console.log(id);
+const getPlayListImg = async () => {
+     const url = 'https://spotify23.p.rapidapi.com/playlist_tracks/?id=37i9dQZF1DX4Wsb4d7NKfP&offset=0&limit=100';
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '7cfe79fb4cmsha97c9c0ea2a5ac4p1fd173jsn0f3c71c9c278',
+            'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
+        }
+    };
 
+    try {
+        state.value = 'loading';
+        const response = await fetch(url, options);
+        const result = await response.json();
+        const matchItem = result?.items?.find(item => item?.track?.album?.id == trackId);
+        playListImg.value = matchItem?.album?.images?.[0]?.url;
+        console.log(matchItem, playListImg.value)
+        console.log(result, playListImg.value)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+onMounted(() => {
     getPlayList();
+    getPlayListImg();
+    if (playList?.[0]?.track?.playcount / 1000000 !== 'NaN') {
+        getPlayList();
+    }
 })
 
 

@@ -25,7 +25,6 @@ const closeSideBar = () => {
     opened.value = false;
 }
 
-
 onBeforeMount(() => {
     console.log('before munt');
     if (!localStorage.getItem('loggedinUser')) {

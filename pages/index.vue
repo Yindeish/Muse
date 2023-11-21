@@ -1,8 +1,8 @@
 <template lang="">
     <div class="w-full h-full flex flex-col gap-6 overflow-y-scroll">
         <LayoutSection :items="singlePlayLists" title="Single Playlists" link="/playlist" :state="state" />
-        <LayoutSection :items="albumPlayLists" title="Albums Playlists" link="//album" :state="state" />
-        <LayoutSection :items="popularAlbums" title="Popular Albums" link="//album" :state="state" />
+        <LayoutSection :items="albumPlayLists" title="Albums Playlists" link="/album" :state="state" />
+        <LayoutSection :items="popularAlbums" title="Popular Albums" link="/album" :state="state" />
 
         <span class="text-gray-400 text-base lg:text-lg lg:font-semibold font-normal mt-1 mb-10 lg:mb-14 pb-2 text-center">&copy; 2023 Muse</span>
     </div>

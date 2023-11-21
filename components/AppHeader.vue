@@ -44,7 +44,7 @@ const backward = () => {
 
 onMounted(() => {
     const segment = useRequestURL().pathname;
-    currentSegment.value = segment.slice(1);
+    currentSegment.value = segment.split("/")[1];
 })
 
 </script>

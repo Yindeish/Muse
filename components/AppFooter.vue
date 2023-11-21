@@ -1,71 +1,62 @@
 <template lang="">
     <div class="col-span-full bg-gray-800 row-span-1 p-4 flex items-center justify-center">
-        <div class="w-full h-full flex items-center justify-between">
+        <div v-if="currentSong" class="w-full h-full flex items-center justify-between">
             <!-- Podcast/Song playing -->
             <div class="w-[fit-content] flex max-sm:flex-col gap-3 justify-start items-center max-sm:items-start max-sm:justify-center max-sm:p-0 rounded-md p-2">
                 <div class="w-[50px] h-[50px] max-sm:w-[35px] max-sm:h-[35px] rounded-md overflow-hidden cursor-pointer">
-                    <img class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/ogw/AKPQZvw9hOaAosIwjnnU8bCyV5ru6yxGxZvADynOjmls1Q=s32-c-mo" alt="">
+                    <img class="w-full h-full object-contain" :src="playListImg" alt="">
                 </div>
                 <div class="flex flex-col gap-3">
-                    <span class="text-white max-sm:text-sm">{{selectedSong?.track?.name}}</span>
-                    <span class="text-gray-400 text-sm max-sm:hidden">Podcast . Misturah Akanbi</span>
-                </div>
-                <div>
-                    <IconPlus color="text-white" cls="w-[25px] h-[25px] tetxt-white cursor-pointer max-sm:hidden" />
+                    <span class="text-white max-sm:text-sm">{{currentSong?.track?.name}}</span>
+                    <div class="flex items-center gap-1">
+                        <span v-for="artist in currentSong?.track?.artists?.items" class="text-gray-400 text-sm">{{artist?.profile.name}}</span>
+                    </div>
                 </div>
             </div>
             <!-- Play Controls -->
             <div>
-                <IconPlay color="text-white" cls="w-[50px] h-[50px] text-white cursor-pointer active:w-[45px] active:h-[45px]" />
+                <video ref="videoPlayer" class="w-[50px] h-[1px]" controls="" autoplay="" name="media"><source :src="currentSong?.preview_url" type="audio/mpeg"></video>
+                <IconPlay v-if="!isPlaying" @click="toggleVideo" color="text-white" cls="w-[50px] h-[50px] text-white cursor-pointer active:w-[45px] active:h-[45px]" />
+                <IconPause v-else @click="toggleVideo" color="text-white" cls="w-[50px] h-[50px] text-white cursor-pointer active:w-[45px] active:h-[45px]" />
             </div>
 
             <!-- Volume Controls -->
-            <div v-if="musicStatus == states.playing" class="w-[45px] h-[45px] max-sm:w-[35px] max-sm:h-[35px] bg-transparent">
+            <div v-if="isPlaying" class="w-[45px] h-[45px] max-sm:w-[35px] max-sm:h-[35px] bg-transparent">
                 <IconPlayIndicator cls="w-full h-full" color="white" />
             </div>
+            <div v-else class="w-[45px] h-[45px] max-sm:w-[35px] max-sm:h-[35px] bg-transparent">
+                <IconPauseIndicator cls="w-full h-full" color="white" />
+            </div>
         </div>
-
 
     </div>
 </template>
 <script setup>
+const videoPlayer = ref(null);
 
-const selectedSong = ref(null);
+const currentSong = ref(null);
+const isPlaying = ref(false);
 
-onMounted(() => {
-    console.log(selectedSong)
-    selectedSong.value = localStorage.getItem('selectedSong')
-})
+const toggleVideo = () => {
+    console.dir(videoPlayer.value);
+    if (isPlaying.value) {
+        videoPlayer.value.pause();
+    } else {
+        videoPlayer.value.play();
+    }
 
-onUpdated(() => {
-    console.log(selectedSong)
-    selectedSong.value = localStorage.getItem('selectedSong')
-})
+    isPlaying.value = !isPlaying.value;
+};
 
-const states = ref({
-    notPlaying: 'not-playing',
-    playing: 'playing',
-    paused: 'paused',
-    stopped: 'stopped'
-})
+const intervalId = setInterval(() => {
+    
+    if (currentSong.value !== JSON.parse(localStorage.getItem('currentSong'))) {
+        currentSong.value = JSON.parse(localStorage.getItem('currentSong'));
 
-const musicStatus = ref('playing');
+        // clearInterval(intervalId);
+    }
+}, 1000);
 
-const play = () => {
-    musicStatus.value = states.value.playing;
-}
-
-const pause = () => {
-    musicStatus.value = states.value.paused;
-}
-
-const stop = () => {
-    musicStatus.value = states.value.stopped;
-}
-
-const reset = () => {
-    musicStatus.value = states.value.notPlaying;
-}
 </script>
 <style lang="">
     

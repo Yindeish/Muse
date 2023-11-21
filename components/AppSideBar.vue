@@ -38,7 +38,7 @@
             </div>
 
             <div class="w-full flex flex-col gap-3 max-sm:gap-1 items-center h-[28vh] overflow-y-scroll">
-                <div class="w-full bg-gray-900 flex gap-3 max-sm:gap-1 justify-start items-center rounded-md p-2 max-sm:p-1 cursor-pointer">
+                <div v-if="recents" v-for="item in recents" class="w-full bg-gray-900 flex gap-3 max-sm:gap-1 justify-start items-center rounded-md p-2 max-sm:p-1 cursor-pointer">
                     <div class="w-[50px] h-[50px] rounded-md overflow-hidden">
                         <img class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/ogw/AKPQZvw9hOaAosIwjnnU8bCyV5ru6yxGxZvADynOjmls1Q=s32-c-mo" alt="">
                     </div>
@@ -47,40 +47,17 @@
                         <span class="text-gray-400 text-sm">Podcast . Misturah Akanbi</span>
                     </div>
                 </div>
-                <div class="w-full bg-gray-900 flex gap-3 justify-start items-center rounded-md p-2 cursor-pointer">
-                    <div class="w-[50px] h-[50px] rounded-md overflow-hidden">
-                        <img class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/ogw/AKPQZvw9hOaAosIwjnnU8bCyV5ru6yxGxZvADynOjmls1Q=s32-c-mo" alt="">
-                    </div>
-                    <div class="flex flex-col gap-3">
-                        <span class="text-white">Mystty Talks</span>
-                        <span class="text-gray-400 text-sm">Podcast . Misturah Akanbi</span>
-                    </div>
-                </div>
-                <div class="w-full bg-gray-900 flex gap-3 justify-start items-center rounded-md p-2 cursor-pointer">
-                    <div class="w-[50px] h-[50px] rounded-md overflow-hidden">
-                        <img class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/ogw/AKPQZvw9hOaAosIwjnnU8bCyV5ru6yxGxZvADynOjmls1Q=s32-c-mo" alt="">
-                    </div>
-                    <div class="flex flex-col gap-3">
-                        <span class="text-white">Mystty Talks</span>
-                        <span class="text-gray-400 text-sm">Podcast . Misturah Akanbi</span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
     <div v-if="opened" @click="onPress" class="max-sm:fixed top-0 right-0 w-[100%] h-[100vh] z-[9] bg-transparent lg:hidden cursor-pointer"></div>
 </template>
-<script>
-export default {
-    props: {
-        opened: {
-            type: Boolean
-        },
-        onPress: {
-            type: Function
-        }
-    }
-}
+<script setup>
+
+const props = defineProps(['opened', 'onPress'])
+const recents = ref(null);
+
+const state = ref('pending');
 </script>
 <style lang="">
 </style>
