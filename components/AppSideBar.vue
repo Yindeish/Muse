@@ -8,12 +8,12 @@
             </div>
             <div class="flex justify-start items-center gap-4 max-sm:gap-0 cursor-pointer">
                 <IconSearch cls="text-gray-400 w-[25px] h-[25px] max-sm:w-[20px] max-sm:h-[20px]" />
-                <input type="search" placeholder="Search" class="text-lg max-sm:text-base font-bold text-gray-400 bg-transparent border-2 focus:outline-none focus:border-gray-400 border-gray-700 p-2 max-sm:p-1 rounded-md w-full">
+                <nuxt-link to="/search" class="text-lg max-sm:text-base font-bold text-gray-400 bg-transparent border-2 focus:outline-none focus:border-gray-400 border-gray-700 p-2 max-sm:p-1 rounded-md w-full">Search</nuxt-link>
             </div>
         </div>
 
        <div class=" w-full p-4 max-sm:p-2 rounded-lg bg-gray-800 flex flex-col gap-6">
-            <div class="flex items-center justify-between">
+            <!-- <div class="flex items-center justify-between">
                 <div class="flex justify-start items-center gap-4 max-sm:gap-1 cursor-pointer">
                 <IconLibrary cls="text-gray-400 w-[25px] h-[25px] max-sm:w-[20px] max-sm:h-[20px]" />
                 <span class="text-lg font-bold text-gray-400 max-sm:text-base">Your Library</span>
@@ -47,7 +47,8 @@
                         <span class="text-gray-400 text-sm">Podcast . Misturah Akanbi</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
+            <div class="text-white h-[50vh]">No Recents</div>
         </div>
     </div>
     <div v-if="opened" @click="onPress" class="max-sm:fixed top-0 right-0 w-[100%] h-[100vh] z-[9] bg-transparent lg:hidden cursor-pointer"></div>

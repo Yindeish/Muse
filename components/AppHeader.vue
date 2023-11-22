@@ -19,8 +19,9 @@
             <div class="w-[25px] h-[25px] bg-gray-800 rounded-full flex items-center justify-center">
                 <IconBell cls="w-[20px] text-white cursor-pointer" />
             </div>
-            <div class="w-[25px] h-[25px] max-sm:w-[20px] max-sm:h-[20px] bg-gray-800 rounded-full flex items-center justify-center">
+            <div @click="toggleLogout" class="w-[25px] h-[25px] max-sm:w-[20px] max-sm:h-[20px] bg-gray-800 rounded-full flex items-center justify-center relative">
                 <IconPerson cls="w-[20px] text-white cursor-pointer" />
+                <span v-if="logoutShown" @click="logout" class="text-black bg-white rounded-md p-2 font-sans text-bold absolute top-[100%] right-0 cursor-pointer z-10">logout</span>
             </div>
             <div @click="onPress">
                 <IconHamburger cls="lg:hidden xl w-[20px] text-white cursor-pointer active:w-[18px]" />
@@ -32,8 +33,18 @@
 
 const props = defineProps(['onPress']);
 const router = useRouter();
+const logoutShown = ref(false);
 
 const currentSegment = ref('');
+
+const toggleLogout = () => {
+    logoutShown.value = !logoutShown.value;
+}
+
+const logout = () => {
+    localStorage.removeItem('loggedinUser');
+    router.replace('/login')
+}
 
 const forward = () => {
     router.forward()

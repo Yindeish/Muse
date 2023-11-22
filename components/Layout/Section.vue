@@ -8,7 +8,7 @@
         <div class="w-full flex gap-3 overflow-x-scroll py-2">
             <div v-if="items && state !== 'loading'" :class="`w-[${items?.length}%] flex gap-2`">
                 <!-- Desktop -->
-                <nuxt-link :to="`http://localhost:3000${link}/${item?.track?.album?.id}/${item?.track?.preview_url}`" v-for="item in items" class="item-container flex flex-col gap-2 rounded-md hover:bg-gray-950 bg-gray-900 p-3 pb-1 w-[13rem] h-[17rem] cursor-pointer max-sm:hidden playlist-container--desktop">
+                <nuxt-link :to="`http://localhost:3001${link}/${item?.track?.album?.id}/${item?.track?.preview_url}`" v-for="item in items" class="item-container flex flex-col gap-2 rounded-md hover:bg-gray-950 bg-gray-900 p-3 pb-1 w-[13rem] h-[17rem] cursor-pointer max-sm:hidden playlist-container--desktop">
                 <!-- <div @click="goto(`http://localhost:3000${link}/${item?.track?.album?.id}`,`${item?.track?.preview_url}`)" v-for="item in items" class="item-container flex flex-col gap-2 rounded-md hover:bg-gray-950 bg-gray-900 p-3 pb-1 w-[13rem] h-[17rem] cursor-pointer max-sm:hidden playlist-container--desktop"> -->
                     <!-- Item poster -->
                     <div :class="`w-[${item?.track?.album?.images[0]?.width ?? '100%'} h-[${item?.track?.album?.images[0]?.width ?? '100%'} flex-[0.95] rounded-md overflow-hidden relative`">

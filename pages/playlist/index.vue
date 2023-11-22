@@ -36,6 +36,7 @@ const getPlayLists = async () => {
             'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
         }
     };
+      
 
     try {
         state.value = 'loading';

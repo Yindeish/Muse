@@ -4,7 +4,7 @@
             <!-- Podcast/Song playing -->
             <div class="w-[fit-content] flex max-sm:flex-col gap-3 justify-start items-center max-sm:items-start max-sm:justify-center max-sm:p-0 rounded-md p-2">
                 <div class="w-[50px] h-[50px] max-sm:w-[35px] max-sm:h-[35px] rounded-md overflow-hidden cursor-pointer">
-                    <img class="w-full h-full object-contain" :src="currentSong?.playListImg" alt="">
+                    <img class="w-full h-full object-contain" src="https://media.istockphoto.com/id/457945109/photo/hands-of-a-dj-mixing-music-at-disco.jpg?s=612x612&w=0&k=20&c=zFshaN_FtucyUvNCCrBmxmHhECvIrvJ3PucAHdK49no=" alt="">
                 </div>
                 <div class="flex flex-col gap-3">
                     <span class="text-white max-sm:text-sm">{{currentSong?.track?.name}}</span>
@@ -15,7 +15,7 @@
             </div>
             <!-- Play Controls -->
             <div>
-                <video ref="videoPlayer" class="w-[50px] h-[1px]" controls="" autoplay="" name="media"><source :src="currentSong?.preview_url" type="audio/mpeg"></video>
+                <video ref="videoPlayer" class="w-[1px] h-[1px]" controls="" autoplay="" name="media"><source :src="currentSong?.preview_url" type="audio/mpeg"></video>
                 <IconPlay v-if="!isPlaying" @click="toggleVideo" color="text-white" cls="w-[50px] h-[50px] text-white cursor-pointer active:w-[45px] active:h-[45px]" />
                 <IconPause v-else @click="toggleVideo" color="text-white" cls="w-[50px] h-[50px] text-white cursor-pointer active:w-[45px] active:h-[45px]" />
             </div>
@@ -35,7 +35,7 @@
 const videoPlayer = ref(null);
 
 const currentSong = ref(null);
-const isPlaying = ref(false);
+const isPlaying = ref(true);
 
 const toggleVideo = () => {
     console.dir(videoPlayer.value);
